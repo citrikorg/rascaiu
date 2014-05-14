@@ -36,6 +36,8 @@ uint8_t pila[150];
 
 void init_baralla(uint8_t *pila)
 {
+  cout << "Entra init";
+	
   uint8_t i;
 
   for(i=0;i<12;i++)    { pila[i] = COPES; } //define
@@ -54,6 +56,7 @@ void init_baralla(uint8_t *pila)
 
 void mostra_baralla(uint8_t *pila)
 {
+  cout << "Entra mostra";
   uint8_t i;
   cout << pila[i];
   while(i<10)
@@ -65,7 +68,7 @@ void mostra_baralla(uint8_t *pila)
 
 int main()
 {
-  uint8_t pila_main;
+  uint8_t pila_main[150];
   init_baralla(pila_main);
   mostra_baralla(pila_main);
 }
