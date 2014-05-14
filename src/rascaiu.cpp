@@ -36,11 +36,11 @@ uint8_t pila[150];
 
 void init_baralla(uint8_t *pila)
 {
-  cout << "Entra init";
+  cout << "Entra init" << endl;
 	
   uint8_t i;
 
-  for(i=0;i<12;i++)    { pila[i] = COPES; } //define
+  for(i=0;i<12;i++) { pila[i] = COPES; } //define
   for(i=12;i<24;i++)   { pila[i] = BASTUS ; } 
   for(i=24;i<36;i++)   { pila[i] = ESPASES ; } 
   for(i=36;i<48;i++)   { pila[i] = ORUS ; } 
@@ -56,20 +56,23 @@ void init_baralla(uint8_t *pila)
 
 void mostra_baralla(uint8_t *pila)
 {
-  cout << "Entra mostra";
-  uint8_t i;
-  cout << pila[i];
-  while(i<10)
+  //cout << "Entra mostra" << endl;
+  int i = 0;
+  while(i<50)
   {
-    cout << pila[i];
+    cout << "[" << i << "]" <<(int)pila[i]<< endl;
     i++;
   }
 }
 
 int main()
 {
-  init_baralla(pila);
-  mostra_baralla(pila);
+  init_baralla(baralla1);
+  init_baralla(baralla2);
+  init_baralla(baralla3);
+  mostra_baralla(baralla1);
+  mostra_baralla(baralla2);
+  mostra_baralla(baralla2);
 }
 //Tros de codi
 
