@@ -68,9 +68,8 @@ void mostra_baralla(uint8_t *pila)
 
 int main()
 {
-  uint8_t pila_main[150];
-  init_baralla(pila_main);
-  mostra_baralla(pila_main);
+  init_baralla(pila);
+  mostra_baralla(pila);
 }
 //Tros de codi
 
