@@ -36,7 +36,7 @@ uint8_t pila[150];
 
 void init_baralla(uint8_t *pila)
 {
-  cout << "Entra init" << endl;
+  //cout << "Entra init" << endl;
 	
   uint8_t i;
 
@@ -60,8 +60,34 @@ void mostra_baralla(uint8_t *pila)
   int i = 0;
   while(i<50)
   {
-    cout << "[" << i << "]" <<(int)pila[i]<< endl;
+    cout << "[" << i << "]" <<(int)pila[i] << endl;
     i++;
+  }
+}
+
+void mostra_pila(uint8_t *pila)
+{
+  int i = 0;
+  while(i<150)
+  {
+    cout << "[" << i << "]" <<(int)pila[i] << endl;
+    i++;
+  }
+}
+
+void crear_pila(uint8_t *pila, uint8_t *baralla1, uint8_t *baralla2, uint8_t *baralla3)
+{ //Aqui hem d ajuntar les baralles a la pila, com a adresses, 
+  //De moment ho fem per valor
+  
+  int i = 0,z = 0;	
+  while(i<150)
+  {
+    if(i == 49 || i == 99) z = 0;
+    if(i<50) pila[i] = baralla1[z];
+    if(i>=50 && i<100) pila[i] = baralla2[z];
+    if(i>100) pila[i] = baralla3[z];
+    i++;
+    z++;
   }
 }
 
@@ -70,11 +96,12 @@ int main()
   init_baralla(baralla1);
   init_baralla(baralla2);
   init_baralla(baralla3);
-  mostra_baralla(baralla1);
-  mostra_baralla(baralla2);
-  mostra_baralla(baralla2);
-}
-//Tros de codi
+  //mostra_baralla(baralla1);
+  //mostra_baralla(baralla2);
+  //mostra_baralla(baralla2);
+  crear_pila(pila, baralla1, baralla2, baralla3);
+  mostra_pila(pila);
 
+}
 //Mirar Pal -> (pila[x] & PAL)== COPES...
 //Mirar num -> (pila[x] & NUM) == 1 ,2 ..12
