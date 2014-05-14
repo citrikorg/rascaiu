@@ -52,22 +52,22 @@ void init_baralla(uint8_t *pila)
   pila[49] = COMODI;
 }
 
-//void mostra_baralla(uint8_t *pila)
-//{
-//  uint8_t i;
-//  cout << pila[i];
-//  while(i<10)
-//  {
-//    cout << pila[i];
-//    i++;
-//  }
-//}
+void mostra_baralla(uint8_t *pila)
+{
+  uint8_t i;
+  cout << pila[i];
+  while(i<10)
+  {
+    cout << pila[i];
+    i++;
+  }
+}
 
 int main()
 {
-  //uint8_t &pila_main;
-  //init_baralla(*pila_main);
-  //mostra_baralla(&pila_main);
+  uint8_t pila_main;
+  init_baralla(pila_main);
+  mostra_baralla(pila_main);
 }
 //Tros de codi
 
