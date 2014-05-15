@@ -14,6 +14,10 @@ Les cartes s emmagatzemen en 1Bytes:
  		 (0-255) Nomes fer servir 4opc = (0000-0100b), podria ser 111b
 */
 
+/* TODO
+ * 1) Crear pila per referencia
+ * 2) Barrejar baralla/pila per referencia
+*/
 
 #define HN 0xF0 //HighNeedle
 #define LN 0x0F //LowNidles
@@ -36,8 +40,6 @@ uint8_t pila[150];
 
 void init_baralla(uint8_t *pila)
 {
-  //cout << "Entra init" << endl;
-	
   uint8_t i;
 
   for(i=0;i<12;i++)    { pila[i] = COPES; } //define
@@ -56,7 +58,6 @@ void init_baralla(uint8_t *pila)
 
 void mostra_baralla(uint8_t *pila)
 {
-  //cout << "Entra mostra" << endl;
   int i = 0;
   while(i<50)
   {
@@ -83,25 +84,24 @@ void crear_pila(uint8_t *pila, uint8_t *baralla1, uint8_t *baralla2, uint8_t *ba
   
   while(i<150)
   {	
-    if(i<=50){ //Primer baralla de 0 a 49 + 2K (51)
+    if(i<=50){ 
       pila[i] = baralla1[z];
       z++;
       i++;
     }
     if( i == 50) z = 0;
-    if(i>49 && i<103) //Segona baralla de 51 a 101 + 2K (103)
+    if(i>49 && i<103) 
     {
       pila[i] = baralla2[z];
       z++;
       i++;
     }
     if( i == 100) z = 0;
-    if(i>=100 && i<151){ //Tercera baralla de 99 a 149 +2K
+    if(i>=100 && i<151){ 
       pila[i] = baralla3[z];
       i++;
       z++;
     }
-    //if( i == 49 || i == 103) z=0;
   }
 }
 
