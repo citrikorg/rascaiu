@@ -1,7 +1,8 @@
 #include <iostream>
 #include <cstdlib>
-#include <time.h>
+#include <ctime>
 #include <stdint.h>
+
 using namespace std;
 
 /*
@@ -108,28 +109,34 @@ void crear_pila(uint8_t *pila, uint8_t *baralla1, uint8_t *baralla2, uint8_t *ba
   }
 }
 
-void barreja_baralla(uint8_t *pila)//int passades)
-{
+void barreja_pila(uint8_t *pila)//int passades)
+	{
   
   uint8_t carta = 0;
   int i = 0;
+  int pos_extreu = 0;
+  int pos_posa = 0;
 	
-  //Agafem la primera carta i la movem a la nova adressa
+  //Agafem una carta, on l hem agafat la posem a 0 (no hi es)
+  //
 
-  //while(passades>=0)
-  //{
-    while(i<150)
+
+  while(i<150)
     {
-      int pos_extreu = rand()%150;
-      int pos_posa = rand()%150;
+      //Si declarem aixi els numeros sempre son mateixos
+      srand(time(NULL));
+
+      //cout << "[" << i << "]" << (int)pila[rand()%500+1] << endl;
+      //On agafem la fiquem a 0xFF
+
+      int pos_extreu = rand()%150+1;
+      int pos_posa = rand()%150+1;
 
       cout << pos_extreu << "-" << pos_posa << endl;
       carta = pila[pos_extreu];
       
       i++;
     }
-    //passades--;
-  //}
 }
 
 int main()
@@ -142,7 +149,7 @@ int main()
   //mostra_baralla(baralla2);
   crear_pila(pila, baralla1, baralla2, baralla3);
   //mostra_pila(pila);
-  barreja_baralla(baralla1);
+  barreja_pila(pila);
 
 }
 //Mirar Pal -> (pila[x] & PAL)== COPES...
