@@ -40,7 +40,7 @@ void init_baralla(uint8_t *pila)
 	
   uint8_t i;
 
-  for(i=0;i<12;i++) { pila[i] = COPES; } //define
+  for(i=0;i<12;i++)    { pila[i] = COPES; } //define
   for(i=12;i<24;i++)   { pila[i] = BASTUS ; } 
   for(i=24;i<36;i++)   { pila[i] = ESPASES ; } 
   for(i=36;i<48;i++)   { pila[i] = ORUS ; } 
@@ -80,14 +80,28 @@ void crear_pila(uint8_t *pila, uint8_t *baralla1, uint8_t *baralla2, uint8_t *ba
   //De moment ho fem per valor
   
   int i = 0,z = 0;	
+  
   while(i<150)
-  {
-    if(i == 49 || i == 99) z = 0;
-    if(i<50) pila[i] = baralla1[z];
-    if(i>=50 && i<100) pila[i] = baralla2[z];
-    if(i>100) pila[i] = baralla3[z];
-    i++;
-    z++;
+  {	
+    if(i<=50){ //Primer baralla de 0 a 49 + 2K (51)
+      pila[i] = baralla1[z];
+      z++;
+      i++;
+    }
+    if( i == 50) z = 0;
+    if(i>49 && i<103) //Segona baralla de 51 a 101 + 2K (103)
+    {
+      pila[i] = baralla2[z];
+      z++;
+      i++;
+    }
+    if( i == 100) z = 0;
+    if(i>=100 && i<151){ //Tercera baralla de 99 a 149 +2K
+      pila[i] = baralla3[z];
+      i++;
+      z++;
+    }
+    //if( i == 49 || i == 103) z=0;
   }
 }
 
