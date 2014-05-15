@@ -1,6 +1,8 @@
 #include <iostream>
-using namespace std;
+#include <cstdlib>
+#include <time.h>
 #include <stdint.h>
+using namespace std;
 
 /*
 
@@ -15,7 +17,7 @@ Les cartes s emmagatzemen en 1Bytes:
 */
 
 /* TODO
- * 1) Crear pila per referencia
+ * 1) Crear pila per referencia, jo ho fa, no?
  * 2) Barrejar baralla/pila per referencia
 */
 
@@ -37,6 +39,7 @@ uint8_t baralla2[50];
 uint8_t baralla3[50];
 
 uint8_t pila[150];
+
 
 void init_baralla(uint8_t *pila)
 {
@@ -105,6 +108,30 @@ void crear_pila(uint8_t *pila, uint8_t *baralla1, uint8_t *baralla2, uint8_t *ba
   }
 }
 
+void barreja_baralla(uint8_t *pila)//int passades)
+{
+  
+  uint8_t carta = 0;
+  int i = 0;
+	
+  //Agafem la primera carta i la movem a la nova adressa
+
+  //while(passades>=0)
+  //{
+    while(i<150)
+    {
+      int pos_extreu = rand()%150;
+      int pos_posa = rand()%150;
+
+      cout << pos_extreu << "-" << pos_posa << endl;
+      carta = pila[pos_extreu];
+      
+      i++;
+    }
+    //passades--;
+  //}
+}
+
 int main()
 {
   init_baralla(baralla1);
@@ -114,7 +141,8 @@ int main()
   //mostra_baralla(baralla2);
   //mostra_baralla(baralla2);
   crear_pila(pila, baralla1, baralla2, baralla3);
-  mostra_pila(pila);
+  //mostra_pila(pila);
+  barreja_baralla(baralla1);
 
 }
 //Mirar Pal -> (pila[x] & PAL)== COPES...
