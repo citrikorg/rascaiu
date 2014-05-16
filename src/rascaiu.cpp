@@ -46,6 +46,11 @@ uint8_t baralla3[MAX_BARALLA];
 
 uint8_t pila[150];
 
+uint8_t jugador1[11];
+uint8_t jugador2[11];
+uint8_t jugador3[11];
+uint8_t jugador4[11];
+
 
 void init_baralla(uint8_t *pl) //Podem unificar en un recorregut
 {
@@ -65,7 +70,7 @@ void init_baralla(uint8_t *pl) //Podem unificar en un recorregut
   pl[49] = COMODI;
 }
 
-void mostra_baralla(uint8_t *brll) //Mostra baralla1
+void mostra_baralla(uint8_t *brll)
 {
   int i;
   
@@ -84,64 +89,98 @@ void mostra_pila(uint8_t *pl)
   }
 }
 
-void crear_pila(uint8_t *pl, uint8_t *br1, uint8_t *br2, uint8_t *br3)
-{ //Aqui hem d ajuntar les baralles a la pila, com a adresses, 
-  //De moment ho fem per valor
+void crear_pila(uint8_t *py, uint8_t *br1, uint8_t *br2, uint8_t *br3)
+{ //Proven de fer-ho per adresses?
   
   int i = 0,z = 0;	
   
   while(i<MAX_PILA)
   {	
     if(i<=50){ 
-      pl[i] = br1[z];
+      py[i] = br1[z];
       z++;
       i++;
     }
     if( i == 50) z = 0;
     if(i>49 && i<103) 
     {
-      pl[i] = br2[z];
+      py[i] = br2[z];
       z++;
       i++;
     }
     if( i == 100) z = 0;
     if(i>=100 && i<151){ 
-      pl[i] = br3[z];
+      py[i] = br3[z];
       i++;
       z++;
     }
   }
 }
 
-void barreja_pila(uint8_t *pl)//int passades)
+void barreja_pila(uint8_t *pl, int passades)
 {
-  //Reescriure, falten cartes!!!
-  uint8_t carta = 0;
-  int i;
+  //Reescriure, falten cartes.  Cartes repetides?
+  uint8_t carta;
+  int i = 0;
   int pos_extreu = 0;
   int pos_posa = 0;
 	
   srand(time(NULL));
   
-  for(i=0;i<MAX_PILA;i++) //No pita, falta una carta a vegades
+  while(passades>0)
   {
-      pos_extreu = rand()%MAX_PILA+1;
-      pos_posa = rand()%MAX_PILA+1;
+    for(i=0;i<MAX_PILA;i++)
+    {
+        pos_extreu = rand()%(MAX_PILA);
+        pos_posa = rand()%(MAX_PILA);
 
-      carta = pila[pos_extreu]; 	//Extreu A, guardem a carta
-      pila[pos_extreu] = pila[pos_posa];//Posem a pos_extre pos_posa
-      pila[pos_posa] = carta;		// posem a pos_posa carta
+        if(pos_extreu != pos_posa)
+        {
+          carta = pl[pos_extreu]; 	  //Extreu A, guardem a carta
+          pl[pos_extreu] = pl[pos_posa];//Posem a pos_extre pos_posa
+          pl[pos_posa] = carta;		  // posem a pos_posa carta
+        }
+    }
+    passades--;
   }
 }
 
-int suma_pila(uint8_t *pl)
+int suma_pila(uint8_t *pla)
 {
   int i = 0;
   int suma = 0;
 
-  for(i=0;i<MAX_PILA;i++) suma += pl[i];
+  for(i=0;i<MAX_PILA;i++) suma += (int)pla[i];
 
   return suma;
+}
+
+void repartir_pila(uint8_t *pila_partida, uint8_t *jug1, uint8_t *jug2, uint8_t *jug3, uint8_t *jug4)//, int num_jug)
+{
+  int ij = 0, ip = 0;
+  //Repartim 44 cartes entre els jugadors de la pila, de dos ens dos cartes
+  //ij de dos a dos i ip de 4 en 4
+  for(ij = 0, ip = 0; ip<44; ij+=2,ip+=8)
+  {
+    jug1[ij] = pila_partida[ip];
+    jug1[ij+1] = pila_partida[ip+2];
+    jug2[ij] = pila_partida[ip+3];
+    jug2[ij+1] = pila_partida[ip+4];
+    jug3[ij] = pila_partida[ip+5];
+    jug3[ij+1] = pila_partida[ip+6];
+    jug4[ij] = pila_partida[ip+7];
+    jug4[ij+1] = pila_partida[ip+8];
+  }
+}
+
+void veure_cartes_jug(uint8_t *jugador)
+{
+  int cartes = 0;
+  while(cartes<10)
+  {  
+    cout << "Carta: " << (int)jugador[cartes] << endl; 
+    cartes++;
+  }
 }
 
 int main()
@@ -153,13 +192,15 @@ int main()
   //mostra_baralla(baralla2);
   //mostra_baralla(baralla2);
   crear_pila(pila, baralla1, baralla2, baralla3);
-  cout << suma_pila(pila) << endl;
   //mostra_pila(pila);
-  barreja_pila(pila);
+  barreja_pila(pila,10);
   //mostra_pila(pila);
-  cout << suma_pila(pila) << endl;
-
+  repartir_pila(pila, jugador1, jugador2, jugador3, jugador4);
+  veure_cartes_jug(jugador1);
+  veure_cartes_jug(jugador2);
 }
+
+//Jugador, 10 cartes cadau
 
 //Mirar Pal -> (pila[x] & PAL)== COPES...
 //Mirar num -> (pila[x] & NUM) == 1 ,2 ..12
