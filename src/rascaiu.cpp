@@ -18,10 +18,7 @@ Les cartes s emmagatzemen en 1Bytes:
 */
 
 /* TODO
- * 1) Crear pila per referencia, FET
- * 2) Barrejar baralla/pila per referencia FET però falten cartes...
- * 3) Canviar variables dins funcio FET
- * 4) Diferents funcions per a baralles? No, amb una hi ha prou
+ * 1) La pila no l hauriem de definir com a fifo?
 */
 
 #define HN 0xF0 //HighNeedle
@@ -160,16 +157,24 @@ void repartir_pila(uint8_t *pila_partida, uint8_t *jug1, uint8_t *jug2, uint8_t 
   int ij = 0, ip = 0;
   //Repartim 44 cartes entre els jugadors de la pila, de dos ens dos cartes
   //ij de dos a dos i ip de 4 en 4
-  for(ij = 0, ip = 0; ip<44; ij+=2,ip+=8)
+  for(ij = 0, ip = 0; ip<40; ij+=2,ip+=8)
   {
     jug1[ij] = pila_partida[ip];
-    jug1[ij+1] = pila_partida[ip+2];
-    jug2[ij] = pila_partida[ip+3];
-    jug2[ij+1] = pila_partida[ip+4];
-    jug3[ij] = pila_partida[ip+5];
-    jug3[ij+1] = pila_partida[ip+6];
-    jug4[ij] = pila_partida[ip+7];
-    jug4[ij+1] = pila_partida[ip+8];
+    pila_partida[ip] = 0xFF;
+    jug1[ij+1] = pila_partida[ip+1];
+    pila_partida[ip+1] = 0xFF;
+    jug2[ij] = pila_partida[ip+2];
+    pila_partida[ip+2] = 0xFF;
+    jug2[ij+1] = pila_partida[ip+3];
+    pila_partida[ip+3] = 0xFF;
+    jug3[ij] = pila_partida[ip+4];
+    pila_partida[ip+4] = 0xFF;
+    jug3[ij+1] = pila_partida[ip+5];
+    pila_partida[ip+5] = 0xFF;
+    jug4[ij] = pila_partida[ip+6];
+    pila_partida[ip+6] = 0xFF;
+    jug4[ij+1] = pila_partida[ip+7];
+    pila_partida[ip+7] = 0xFF;
   }
 }
 
@@ -177,11 +182,29 @@ void veure_cartes_jug(uint8_t *jugador)
 {
   int cartes = 0;
   while(cartes<10)
-  {  
-    cout << "Carta: " << (int)jugador[cartes] << endl; 
+  {
+    //cout << "Carta: " << (int)jugador[cartes] << endl;
+    if(jugador[cartes] & COPES) cout << "C";
+    if(jugador[cartes] & BASTUS) cout << "B";
+    if(jugador[cartes] & ESPASES) cout << "E";
+    if(jugador[cartes] & ORUS) cout << "O";
+    if(jugador[cartes] AND COMODI) cout << "K";
     cartes++;
   }
+  cout << endl;
 }
+
+void ordena_cartes_jug(uint8_t *juga)
+{
+  //Primera passada, numeros, ordenament per seleccio https://es.wikipedia.org/wiki/Ordenamiento_por_selecci%C3%B3n
+  int indexc = 0;
+  for(indexc = 0; indexc<10; indexc++) //Ordenar per pal i nombre
+  {
+
+  }
+}
+
+//I
 
 int main()
 {
@@ -196,8 +219,15 @@ int main()
   barreja_pila(pila,10);
   //mostra_pila(pila);
   repartir_pila(pila, jugador1, jugador2, jugador3, jugador4);
+  cout << "Cartes jugador1" << endl;
   veure_cartes_jug(jugador1);
+  cout << "Cartes jugador2" << endl;
   veure_cartes_jug(jugador2);
+  cout << "Cartes jugador3" << endl;
+  veure_cartes_jug(jugador3);
+  cout << "Cartes jugador4" << endl;
+  veure_cartes_jug(jugador4);
+  //mostra_pila(pila);
 }
 
 //Jugador, 10 cartes cadau
