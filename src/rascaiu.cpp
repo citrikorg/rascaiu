@@ -155,8 +155,9 @@ int suma_pila(uint8_t *pla)
 void repartir_pila(uint8_t *pila_partida, uint8_t *jug1, uint8_t *jug2, uint8_t *jug3, uint8_t *jug4)//, int num_jug)
 {
   int ij = 0, ip = 0;
-  //Repartim 44 cartes entre els jugadors de la pila, de dos ens dos cartes
-  //ij de dos a dos i ip de 4 en 4
+  //Repartim 40 cartes entre els jugadors de la pila, de dos ens dos
+  //ij de dos a dos i ip de 8 en 8
+  //REVISAR, TOT CORRECTE?
   for(ij = 0, ip = 0; ip<40; ij+=2,ip+=8)
   {
     jug1[ij] = pila_partida[ip];
@@ -188,7 +189,7 @@ void veure_cartes_jug(uint8_t *jugador)
     if(jugador[cartes] & BASTUS) cout << "B";
     if(jugador[cartes] & ESPASES) cout << "E";
     if(jugador[cartes] & ORUS) cout << "O";
-    //if(jugador[cartes] & COMODI) cout << "K"; //Falla, hem de trobar OP correcte
+    if(jugador[cartes] == COMODI) cout << "K"; //Falla, hem de trobar OP correcte
     cartes++;
   }
   cout << endl;
