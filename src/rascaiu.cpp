@@ -20,8 +20,8 @@ Les cartes s emmagatzemen en 1Bytes:
 /* TODO
  * 1) Crear pila per referencia, FET
  * 2) Barrejar baralla/pila per referencia FET però falten cartes...
- * 3) Canviar variables dins funcio
- * 4) Diferents funcions per a baralles?
+ * 3) Canviar variables dins funcio FET
+ * 4) Diferents funcions per a baralles? No, amb una hi ha prou
 */
 
 #define HN 0xF0 //HighNeedle
@@ -65,27 +65,26 @@ void init_baralla(uint8_t *pila)
   pila[49] = COMODI;
 }
 
-void mostra_baralla(uint8_t *baralla1) //Mostra baralla1
+void mostra_baralla(uint8_t *brll) //Mostra baralla1
 {
-  int i = 0;
-  while(i<MAX_BARALLA)
+  int i;
+  
+  for(i=0;i<MAX_BARALLA;i++)
   {
-    cout << "[" << i << "]" <<(int)pila[i] << endl;
-    i++;
+    cout << "[" << i << "]" <<(int)brll[i] << endl;
   }
 }
 
-void mostra_pila(uint8_t *pila)
+void mostra_pila(uint8_t *pl)
 {
-  int i = 0;
-  while(i<MAX_PILA)
+  int i;
+  for(i=0;i<MAX_PILA;i++)
   {
     cout << "[" << i << "]" <<(int)pila[i] << endl;
-    i++;
   }
 }
 
-void crear_pila(uint8_t *pila, uint8_t *baralla1, uint8_t *baralla2, uint8_t *baralla3)
+void crear_pila(uint8_t *pl, uint8_t *br1, uint8_t *br2, uint8_t *br3)
 { //Aqui hem d ajuntar les baralles a la pila, com a adresses, 
   //De moment ho fem per valor
   
@@ -94,20 +93,20 @@ void crear_pila(uint8_t *pila, uint8_t *baralla1, uint8_t *baralla2, uint8_t *ba
   while(i<MAX_PILA)
   {	
     if(i<=50){ 
-      pila[i] = baralla1[z];
+      pl[i] = br1[z];
       z++;
       i++;
     }
     if( i == 50) z = 0;
     if(i>49 && i<103) 
     {
-      pila[i] = baralla2[z];
+      pl[i] = br2[z];
       z++;
       i++;
     }
     if( i == 100) z = 0;
     if(i>=100 && i<151){ 
-      pila[i] = baralla3[z];
+      pl[i] = br3[z];
       i++;
       z++;
     }
@@ -118,13 +117,14 @@ void barreja_pila(uint8_t *pl)//int passades)
 {
   //Reescriure, falten cartes!!!
   uint8_t carta = 0;
-  int i = 0;
-  int pos_extreu = 0;
-  int pos_posa = 0;
+  int i;
+  //int pos_extreu = 0;
+  //int pos_posa = 0;
 	
   //Agafem una carta, on l hem agafat la posem a 0 (no hi es), ara no ho fem
   srand(time(NULL));
-  while(i<MAX_PILA)
+  
+  for(i=0;i<MAX_PILA;i++)
   {
       //Si declarem aixi els numeros sempre son mateixos
       //srand(time(NULL));
@@ -134,13 +134,9 @@ void barreja_pila(uint8_t *pl)//int passades)
       int pos_extreu = rand()%MAX_PILA+1;
       int pos_posa = rand()%MAX_PILA+1;
 
-      carta = pila[pos_extreu];
-      pila[pos_extreu] = pila[pos_posa];
-      pila[pos_posa] = carta;
-      //Extrei A, guardem a cart
-      //pil{pos_extreu] pila[pos_posa]
-      //pila{pos_extr] 
-      i++;
+      carta = pila[pos_extreu]; 	//Extreu A, guardem a carta
+      pila[pos_extreu] = pila[pos_posa];//Posem a pos_extre pos_posa
+      pila[pos_posa] = carta;		// posem a pos_posa carta
     }
 }
 
@@ -170,8 +166,6 @@ int main()
   cout << suma_pila(pila) << endl;
 
 }
-//Comprovar pila fem suma
-//Canviar while
 
 //Mirar Pal -> (pila[x] & PAL)== COPES...
 //Mirar num -> (pila[x] & NUM) == 1 ,2 ..12
