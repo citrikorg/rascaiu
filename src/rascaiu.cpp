@@ -182,13 +182,16 @@ void repartir_pila(uint8_t *pila_partida, uint8_t *jug1, uint8_t *jug2, uint8_t 
 void veure_cartes_jug(uint8_t *jugador)
 {
   int cartes = 0;
+  uint8_t car = 0x00;
   while(cartes<10)
   {
-    //cout << "Carta: " << (int)jugador[cartes] << endl;
-    if(jugador[cartes] & COPES) cout << "C"; //NUM!!!
-    if(jugador[cartes] & BASTUS) cout << "B";
-    if(jugador[cartes] & ESPASES) cout << "E";
-    if(jugador[cartes] & ORUS) cout << "O";
+    //Crear mascara per agafar part baix
+    car = jugador[cartes] += 0xF0;
+    car = jugador[cartes] -= 0xF0;
+    if(jugador[cartes] & COPES) cout << (int)car << "C"; //Hauriem de treure o nomes veure la part baixa per ob num
+    if(jugador[cartes] & BASTUS) cout << (int)car << "B";
+    if(jugador[cartes] & ESPASES) cout << (int)car << "E";
+    if(jugador[cartes] & ORUS) cout << (int)car << "O";
     if(jugador[cartes] == COMODI) cout << "K"; //Falla, hem de trobar OP correcte
     cartes++;
   }
