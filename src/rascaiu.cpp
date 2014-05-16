@@ -47,22 +47,22 @@ uint8_t baralla3[MAX_BARALLA];
 uint8_t pila[150];
 
 
-void init_baralla(uint8_t *pila)
+void init_baralla(uint8_t *pl) //Podem unificar en un recorregut
 {
   uint8_t i;
 
-  for(i=0;i<12;i++)    { pila[i] = COPES; } //define
-  for(i=12;i<24;i++)   { pila[i] = BASTUS ; } 
-  for(i=24;i<36;i++)   { pila[i] = ESPASES ; } 
-  for(i=36;i<48;i++)   { pila[i] = ORUS ; } 
+  for(i=0;i<12;i++)    { pl[i] = COPES; } //define
+  for(i=12;i<24;i++)   { pl[i] = BASTUS ; } 
+  for(i=24;i<36;i++)   { pl[i] = ESPASES ; } 
+  for(i=36;i<48;i++)   { pl[i] = ORUS ; } 
 
   for(i=0;i<48;i++)
   { 
-    pila[i] += (i%12)+1;  
+    pl[i] += (i%12)+1;  
   } //resta div ent
 
-  pila[48] = COMODI;
-  pila[49] = COMODI;
+  pl[48] = COMODI;
+  pl[49] = COMODI;
 }
 
 void mostra_baralla(uint8_t *brll) //Mostra baralla1
@@ -118,26 +118,20 @@ void barreja_pila(uint8_t *pl)//int passades)
   //Reescriure, falten cartes!!!
   uint8_t carta = 0;
   int i;
-  //int pos_extreu = 0;
-  //int pos_posa = 0;
+  int pos_extreu = 0;
+  int pos_posa = 0;
 	
-  //Agafem una carta, on l hem agafat la posem a 0 (no hi es), ara no ho fem
   srand(time(NULL));
   
-  for(i=0;i<MAX_PILA;i++)
+  for(i=0;i<MAX_PILA;i++) //No pita, falta una carta a vegades
   {
-      //Si declarem aixi els numeros sempre son mateixos
-      //srand(time(NULL));
-
-      //On agafem la fiquem a 0xFF
-
-      int pos_extreu = rand()%MAX_PILA+1;
-      int pos_posa = rand()%MAX_PILA+1;
+      pos_extreu = rand()%MAX_PILA+1;
+      pos_posa = rand()%MAX_PILA+1;
 
       carta = pila[pos_extreu]; 	//Extreu A, guardem a carta
       pila[pos_extreu] = pila[pos_posa];//Posem a pos_extre pos_posa
       pila[pos_posa] = carta;		// posem a pos_posa carta
-    }
+  }
 }
 
 int suma_pila(uint8_t *pl)
