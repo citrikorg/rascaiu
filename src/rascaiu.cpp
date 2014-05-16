@@ -184,11 +184,11 @@ void veure_cartes_jug(uint8_t *jugador)
   while(cartes<10)
   {
     //cout << "Carta: " << (int)jugador[cartes] << endl;
-    if(jugador[cartes] & COPES) cout << "C";
+    if(jugador[cartes] & COPES) cout << "C"; //NUM!!!
     if(jugador[cartes] & BASTUS) cout << "B";
     if(jugador[cartes] & ESPASES) cout << "E";
     if(jugador[cartes] & ORUS) cout << "O";
-    if(jugador[cartes] AND COMODI) cout << "K";
+    //if(jugador[cartes] & COMODI) cout << "K"; //Falla, hem de trobar OP correcte
     cartes++;
   }
   cout << endl;
