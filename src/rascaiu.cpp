@@ -116,7 +116,6 @@ void crear_pila(uint8_t *py, uint8_t *br1, uint8_t *br2, uint8_t *br3)
 
 void barreja_pila(uint8_t *pl, int passades)
 {
-  //Reescriure, falten cartes.  Cartes repetides?
   uint8_t carta;
   int i = 0;
   int pos_extreu = 0;
@@ -217,24 +216,23 @@ void ordena_cartes_jug(uint8_t *juga)
 {
   //Ordenar cartes pel mateix nombre, ho podem fer per bits
   //Primera passada, numeros, ordenament per seleccio https://es.wikipedia.org/wiki/Ordenamiento_por_selecci%C3%B3n
-  int ii = 0;
-  int ij = 1;
-  uint8_t cart = 0x00;
-  int num = 0;
-  char pal;
-  
-  if(juga[ii] | COPES)
-  {
-	  
-  }
+  //Ordenem per numero dec de carta, ordenacio per seleccio:
+  int max = 0;
+  int index = 1;
+  uint8_t temp = 0x00;
+  int mida = 10;
 
-  //Ordenar per COPE
-  //
-  //Ordenar BASTUS
-  //
-  //Ordenar ESPASES
-  //
-  //Ordenar ORUS
+  while(mida>0)
+  {
+    max = 0;
+    for(index=1;index<mida;index++)
+	    if(juga[index] > juga[max]) max = index;
+    temp = juga[mida-1];
+    juga[mida-1] = juga[max];
+    juga[max] = temp;
+    mida--;
+  }
+  //Mirar si tres o mes numeros iguals
 }
 
 int main()
@@ -250,13 +248,16 @@ int main()
   barreja_pila(pila,10);
   //mostra_pila(pila);
   repartir_pila(pila, jugador1, jugador2, jugador3, jugador4);
-  cout << "Cartes jugador1" << endl;
+  cout << "Cartes jugador1:" << endl;
   veure_cartes_jug(jugador1);
-  cout << "Cartes jugador2" << endl;
+  cout << "Cartes jugador2:" << endl;
   veure_cartes_jug(jugador2);
-  cout << "Cartes jugador3" << endl;
+  cout << "Cartes jugador3:" << endl;
   veure_cartes_jug(jugador3);
-  cout << "Cartes jugador4" << endl;
+  cout << "Cartes jugador4:" << endl;
+  veure_cartes_jug(jugador4);
+  ordena_cartes_jug(jugador4);
+  cout << "Cartes ordenades:" << endl;
   veure_cartes_jug(jugador4);
   //mostra_pila(pila);
 }
