@@ -212,21 +212,23 @@ void veure_cartes_jug(uint8_t *jugador)
   cout << endl;
 }
 
-void ordena_cartes_jug(uint8_t *juga)
+void ordena_cartes_jug(uint8_t *juga) //IA Power!
 {
   //Ordenar cartes pel mateix nombre, ho podem fer per bits
-  //Primera passada, numeros, ordenament per seleccio https://es.wikipedia.org/wiki/Ordenamiento_por_selecci%C3%B3n
   //Ordenem per numero dec de carta, ordenacio per seleccio:
   int max = 0;
   int index = 1;
   uint8_t temp = 0x00;
   int mida = 10;
 
+  //Ordenar per numero i per pal
+  //Obviar part del pal? Ordenat per numero?
+
   while(mida>0)
   {
     max = 0;
     for(index=1;index<mida;index++)
-	    if(juga[index] > juga[max]) max = index;
+	    if(juga[index] > juga[max]) max = index; //Compara nomes numero!
     temp = juga[mida-1];
     juga[mida-1] = juga[max];
     juga[max] = temp;
