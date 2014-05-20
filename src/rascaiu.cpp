@@ -182,21 +182,32 @@ void repartir_pila(uint8_t *pila_partida, uint8_t *jug1, uint8_t *jug2, uint8_t 
 void veure_cartes_jug(uint8_t *jugador)
 {
   int cartes = 0;
-  //uint8_t car = 0x00;
+  uint8_t car = 0x00;
+
   while(cartes<10)
   {
-    //MODUL 12 PER CALCULAR???
-    //Crear mascara per agafar part baix
-    //car = jugador[cartes] += 0xF0;
-    //car = jugador[cartes] -= 0xF0;
+    //MODUL 12 PER CALCULAR??? NOPE
     if(jugador[cartes] & COPES) {
-      cout << jugador[cartes] -= COPES;
-      cout << "C"; //Hauriem de treure o nomes veure la part baixa per ob num
+      car += (jugador[cartes] ^ COPES); //Treiem part alta, funciona? Sembla que si
+      cout << (int)car << "c"; //Hem de convertir a int carta
+      car = 0x00;
     }
-    if(jugador[cartes] & BASTUS) cout << (int)car << "B";
-    if(jugador[cartes] & ESPASES) cout << (int)car << "E";
-    if(jugador[cartes] & ORUS) cout << (int)car << "O";
-    if(jugador[cartes] == COMODI) cout << "K"; //Falla, hem de trobar OP correcte
+    if(jugador[cartes] & BASTUS){
+      car += (jugador[cartes] ^ BASTUS);
+      cout << (int)car << "b";
+      car = 0x00;
+    }
+    if(jugador[cartes] & ESPASES){
+      car += (jugador[cartes] ^ ESPASES);
+      cout << (int)car << "e";
+      car = 0x00;
+    }
+    if(jugador[cartes] & ORUS){
+      car += (jugador[cartes] ^ ORUS);
+      cout << (int)car << "o";
+      car = 0x00;
+    }
+    if(jugador[cartes] == COMODI) cout << "K"; 
     cartes++;
   }
   cout << endl;
@@ -211,8 +222,6 @@ void ordena_cartes_jug(uint8_t *juga)
 
   }
 }
-
-//I
 
 int main()
 {
