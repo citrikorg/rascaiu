@@ -37,7 +37,7 @@ Les cartes s emmagatzemen en 1Bytes:
 #define MAX_PILA 150
 #define MAX_BARALLA 50
 
-uint8_t baralla1[MAX_BARALLA]; //Unsigned int de 8
+uint8_t baralla1[MAX_BARALLA];
 uint8_t baralla2[MAX_BARALLA];
 uint8_t baralla3[MAX_BARALLA];
 
@@ -156,7 +156,6 @@ void repartir_pila(uint8_t *pila_partida, uint8_t *jug1, uint8_t *jug2, uint8_t 
   int ij = 0, ip = 0;
   //Repartim 40 cartes entre els jugadors de la pila, de dos ens dos
   //ij de dos a dos i ip de 8 en 8
-  //REVISAR, TOT CORRECTE?
   for(ij = 0, ip = 0; ip<40; ij+=2,ip+=8)
   {
     jug1[ij] = pila_partida[ip];
@@ -185,10 +184,9 @@ void veure_cartes_jug(uint8_t *jugador)
 
   while(cartes<10)
   {
-    //MODUL 12 PER CALCULAR??? NOPE
     if(jugador[cartes] & COPES) {
       car += (jugador[cartes] ^ COPES); //Treiem part alta, funciona? Sembla que si
-      cout << (int)car << "c"; //Hem de convertir a int carta
+      cout << (int)car << "c"; 
       car = 0x00;
     }
     if(jugador[cartes] & BASTUS){
@@ -219,16 +217,17 @@ void ordena_cartes_jug(uint8_t *juga) //IA Power!
   int max = 0;
   int index = 1;
   uint8_t temp = 0x00;
+  uint8_t alt = 0xF0;
   int mida = 10;
 
-  //Ordenar per numero i per pal
-  //Obviar part del pal? Ordenat per numero?
+  //Ordenar per numero i per pal, FET
+  //Obviar part del pal? Ordenat per numero? COMORL?
 
   while(mida>0)
   {
     max = 0;
     for(index=1;index<mida;index++)
-	    if(juga[index] > juga[max]) max = index; //Compara nomes numero!
+      if(juga[index] > juga[max]) max = index; //Compara nomes numero!
     temp = juga[mida-1];
     juga[mida-1] = juga[max];
     juga[max] = temp;
@@ -264,7 +263,5 @@ int main()
   //mostra_pila(pila);
 }
 
-//Jugador, 10 cartes cadau
-
 //Mirar Pal -> (pila[x] & PAL)== COPES...
-//Mirar num -> (pila[x] & NUM) == 1 ,2 ..12
+//Mirar num -> (pila[x] & NUM) == 1 ,2 ..12, No funciona per comparar??? ordenar
