@@ -19,34 +19,36 @@ Les cartes s emmagatzemen en 1Bytes:
 
 /* TODO
  * 1) La pila no l hauriem de definir com a fifo?
+ * 2) Hauriem de crear una mena d index per a cartes aparellades?
 */
 
-#define HN 0xF0 //HighNeedle
-#define LN 0x0F //LowNidles
+#define HN 0xF0 	//HighNeedle
+#define LN 0x0F 	//LowNidles
 
-#define PAL 0xF0 //Part alta
-#define NUM 0x0F //Part baixa
+#define PAL 0xF0 	//Part alta
+#define NUM 0x0F 	//Part baixa
 
-#define COPES 0x10   // 0001
-#define BASTUS 0x20  // 0010
-#define ESPASES 0x40 // 0100
-#define ORUS 0x80    // 1000
+#define COPES 0x10   	// 0001
+#define BASTUS 0x20  	// 0010
+#define ESPASES 0x40 	// 0100
+#define ORUS 0x80    	// 1000
 
-#define COMODI 0x0F  // 15 decimal
+#define COMODI 0x0F  	// 15 decimal
 
 #define MAX_PILA 150
 #define MAX_BARALLA 50
+#define MAX_JUGADOR 11
 
 uint8_t baralla1[MAX_BARALLA];
 uint8_t baralla2[MAX_BARALLA];
 uint8_t baralla3[MAX_BARALLA];
 
-uint8_t pila[150];
+uint8_t pila[MAX_PILA];
 
-uint8_t jugador1[11];
-uint8_t jugador2[11];
-uint8_t jugador3[11];
-uint8_t jugador4[11];
+uint8_t jugador1[MAX_JUGADOR];
+uint8_t jugador2[MAX_JUGADOR];
+uint8_t jugador3[MAX_JUGADOR];
+uint8_t jugador4[MAX_JUGADOR];
 
 
 void init_baralla(uint8_t *pl) //Podem unificar en un recorregut
@@ -69,47 +71,47 @@ void init_baralla(uint8_t *pl) //Podem unificar en un recorregut
 
 void mostra_baralla(uint8_t *brll)
 {
-  int i;
+  uint8_t indx;
   
-  for(i=0;i<MAX_BARALLA;i++)
+  for(indx=0;indx<MAX_BARALLA;indx++)
   {
-    cout << "[" << i << "]" <<(int)brll[i] << endl;
+    cout << "[" << indx << "]" <<(int)brll[indx] << endl;
   }
 }
 
 void mostra_pila(uint8_t *pl)
 {
-  int i;
-  for(i=0;i<MAX_PILA;i++)
+  uint8_t in;
+  for(in=0;in<MAX_PILA;in++)
   {
-    cout << "[" << i << "]" <<(int)pila[i] << endl;
+    cout << "[" << in << "]" <<(int)pila[in] << endl;
   }
 }
 
 void crear_pila(uint8_t *py, uint8_t *br1, uint8_t *br2, uint8_t *br3)
 { //Proven de fer-ho per adresses?
   
-  int i = 0,z = 0;	
+  int ind = 0, znd = 0;	
   
-  while(i<MAX_PILA)
+  while(ind<MAX_PILA)
   {	
-    if(i<=50){ 
-      py[i] = br1[z];
-      z++;
-      i++;
+    if(ind<=50){ 
+      py[ind] = br1[znd];
+      znd++;
+      ind++;
     }
-    if( i == 50) z = 0;
-    if(i>49 && i<103) 
+    if( ind == 50) znd = 0;
+    if(ind>49 && ind<103) 
     {
-      py[i] = br2[z];
-      z++;
-      i++;
+      py[ind] = br2[znd];
+      znd++;
+      ind++;
     }
-    if( i == 100) z = 0;
-    if(i>=100 && i<151){ 
-      py[i] = br3[z];
-      i++;
-      z++;
+    if( ind == 100) znd = 0;
+    if(ind>=100 && ind<151){ 
+      py[ind] = br3[znd];
+      ind++;
+      znd++;
     }
   }
 }
@@ -117,15 +119,15 @@ void crear_pila(uint8_t *py, uint8_t *br1, uint8_t *br2, uint8_t *br3)
 void barreja_pila(uint8_t *pl, int passades)
 {
   uint8_t carta;
-  int i = 0;
-  int pos_extreu = 0;
-  int pos_posa = 0;
+  uint8_t ix = 0;
+  uint8_t pos_extreu = 0;
+  uint8_t pos_posa = 0;
 	
   srand(time(NULL));
   
   while(passades>0)
   {
-    for(i=0;i<MAX_PILA;i++)
+    for(ix=0;ix<MAX_PILA;ix++)
     {
         pos_extreu = rand()%(MAX_PILA);
         pos_posa = rand()%(MAX_PILA);
@@ -143,17 +145,17 @@ void barreja_pila(uint8_t *pl, int passades)
 
 int suma_pila(uint8_t *pla)
 {
-  int i = 0;
-  int suma = 0;
+  uint8_t iz = 0;
+  uint8_t suma = 0;
 
-  for(i=0;i<MAX_PILA;i++) suma += (int)pla[i];
+  for(iz=0;iz<MAX_PILA;iz++) suma += (int)pla[iz];
 
   return suma;
 }
 
 void repartir_pila(uint8_t *pila_partida, uint8_t *jug1, uint8_t *jug2, uint8_t *jug3, uint8_t *jug4)//, int num_jug)
 {
-  int ij = 0, ip = 0;
+  uint8_t ij = 0, ip = 0;
   //Repartim 40 cartes entre els jugadors de la pila, de dos ens dos
   //ij de dos a dos i ip de 8 en 8
   for(ij = 0, ip = 0; ip<40; ij+=2,ip+=8)
@@ -179,7 +181,7 @@ void repartir_pila(uint8_t *pila_partida, uint8_t *jug1, uint8_t *jug2, uint8_t 
 
 void veure_cartes_jug(uint8_t *jugador)
 {
-  int cartes = 0;
+  uint8_t cartes = 0;
   uint8_t car = 0x00;
 
   while(cartes<10)
@@ -214,20 +216,18 @@ void ordena_cartes_jug(uint8_t *juga) //IA Power!
 {
   //Ordenar cartes pel mateix nombre, ho podem fer per bits
   //Ordenem per numero dec de carta, ordenacio per seleccio:
-  int max = 0;
-  int index = 1;
+  uint8_t max = 0;
+  uint8_t index = 1;
   uint8_t temp = 0x00;
-  uint8_t alt = 0xF0;
-  int mida = 10;
+  uint8_t mida = 10;
 
-  //Ordenar per numero i per pal, FET
-  //Obviar part del pal? Ordenat per numero? COMORL?
+  //Ordenar per numero i per pal, FET, treure NUM
 
   while(mida>0)
   {
     max = 0;
     for(index=1;index<mida;index++)
-      if(juga[index] > juga[max]) max = index; //Compara nomes numero!
+      if((juga[index]&NUM) > (juga[max]&NUM)) max = index; //Compara nomes numero!FET
     temp = juga[mida-1];
     juga[mida-1] = juga[max];
     juga[max] = temp;
@@ -257,9 +257,9 @@ int main()
   veure_cartes_jug(jugador3);
   cout << "Cartes jugador4:" << endl;
   veure_cartes_jug(jugador4);
-  ordena_cartes_jug(jugador4);
+  ordena_cartes_jug(jugador2);
   cout << "Cartes ordenades:" << endl;
-  veure_cartes_jug(jugador4);
+  veure_cartes_jug(jugador2);
   //mostra_pila(pila);
 }
 
