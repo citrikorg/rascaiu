@@ -19,7 +19,7 @@ Les cartes s emmagatzemen en 1Bytes:
 
 /* TODO
  * 1) La pila no l hauriem de definir com a fifo?
- * 2) Hauriem de crear una mena d index per a cartes aparellades?
+ * 2) Hauriem de crear una mena d index per a cartes lligades?
 */
 
 #define HN 0xF0 	//HighNeedle
@@ -33,7 +33,7 @@ Les cartes s emmagatzemen en 1Bytes:
 #define ESPASES 0x40 	// 0100
 #define ORUS 0x80    	// 1000
 
-#define COMODI 0x0F  	// 15 decimal
+#define COMODI 0x00  	
 
 #define MAX_PILA 150
 #define MAX_BARALLA 50
@@ -45,8 +45,7 @@ uint8_t baralla3[MAX_BARALLA];
 
 uint8_t pila[MAX_PILA];
 
-
-//Punts per jugador? Taula final per partida i punt per jugador
+//Punts per jugador? Taula final per partida i punts per jugador
 
 uint8_t jugador1[MAX_JUGADOR];
 uint8_t jugador2[MAX_JUGADOR];
@@ -225,7 +224,7 @@ void ordena_cartes_jug(uint8_t *juga) //IA Power!
   uint8_t temp = 0x00;
   uint8_t mida = 10;
 
-  //Ordenar per numero i per pal, FET, treure NUM
+  //Si volem ordenar per numero i per pal, treure NUM
 
   while(mida>0)
   {
@@ -240,9 +239,21 @@ void ordena_cartes_jug(uint8_t *juga) //IA Power!
   //Mirar si tres o mes numeros iguals
 }
 
-int punts_cartes(uint8_t *jugad) //Suma els punts de la ma
+//Hem de tenir en compte les cartes lligades!!! Ara suma tot!
+//Per lligar cartes: 3 o mes cartes o igual de num o del mateix pal i colleralives
+//Trio: k[i] k[i+1] b[i+2] IGUAL NUM
+
+int punts_ma(uint8_t *jugad)
 {
+  uint8_t recorre = 0;
+  int punts = 0;
   
+  for(recorre=0;recorre<MAX_JUGADOR-1;recorre++)
+  {
+    if(jugad[recorre]&NUM == jugad[recorre+1]&NUM == jugad[recorre+2]&NUM) cout << "Lligat!";
+    else punts += jugad[recorre]&NUM;
+  }
+  return punts;
 }
 
 int main()
@@ -258,19 +269,21 @@ int main()
   barreja_pila(pila,10);
   //mostra_pila(pila);
   repartir_pila(pila, jugador1, jugador2, jugador3, jugador4);
-  cout << "Cartes jugador1:" << endl;
-  veure_cartes_jug(jugador1);
+  //cout << "Cartes jugador1:" << endl;
+  //veure_cartes_jug(jugador1);
   cout << "Cartes jugador2:" << endl;
   veure_cartes_jug(jugador2);
-  cout << "Cartes jugador3:" << endl;
-  veure_cartes_jug(jugador3);
-  cout << "Cartes jugador4:" << endl;
-  veure_cartes_jug(jugador4);
+  //cout << "Cartes jugador3:" << endl;
+  //veure_cartes_jug(jugador3);
+  //cout << "Cartes jugador4:" << endl;
+  //veure_cartes_jug(jugador4);
   ordena_cartes_jug(jugador2);
   cout << "Cartes ordenades:" << endl;
   veure_cartes_jug(jugador2);
+  cout << "Punts: ";
+  cout << punts_ma(jugador2);
   //mostra_pila(pila);
 }
 
 //Mirar Pal -> (pila[x] & PAL)== COPES...
-//Mirar num -> (pila[x] & NUM) == 1 ,2 ..12, No funciona per comparar??? ordenar
+//Mirar num -> (pila[x] & NUM) == 1 ,2 ..12, 
