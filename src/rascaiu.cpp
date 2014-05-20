@@ -45,13 +45,16 @@ uint8_t baralla3[MAX_BARALLA];
 
 uint8_t pila[MAX_PILA];
 
+
+//Punts per jugador? Taula final per partida i punt per jugador
+
 uint8_t jugador1[MAX_JUGADOR];
 uint8_t jugador2[MAX_JUGADOR];
 uint8_t jugador3[MAX_JUGADOR];
 uint8_t jugador4[MAX_JUGADOR];
 
 
-void init_baralla(uint8_t *pl) //Podem unificar en un recorregut
+void init_baralla(uint8_t *pl) //Podem unificar en un recorregut, dos recorreguts
 {
   uint8_t i;
 
@@ -216,6 +219,7 @@ void ordena_cartes_jug(uint8_t *juga) //IA Power!
 {
   //Ordenar cartes pel mateix nombre, ho podem fer per bits
   //Ordenem per numero dec de carta, ordenacio per seleccio:
+  
   uint8_t max = 0;
   uint8_t index = 1;
   uint8_t temp = 0x00;
@@ -227,13 +231,18 @@ void ordena_cartes_jug(uint8_t *juga) //IA Power!
   {
     max = 0;
     for(index=1;index<mida;index++)
-      if((juga[index]&NUM) > (juga[max]&NUM)) max = index; //Compara nomes numero!FET
+      if((juga[index]&NUM) > (juga[max]&NUM)) max = index; //Compara nomes numeros! FET
     temp = juga[mida-1];
     juga[mida-1] = juga[max];
     juga[max] = temp;
     mida--;
   }
   //Mirar si tres o mes numeros iguals
+}
+
+int punts_cartes(uint8_t *jugad) //Suma els punts de la ma
+{
+  
 }
 
 int main()
