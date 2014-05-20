@@ -215,12 +215,26 @@ void veure_cartes_jug(uint8_t *jugador)
 
 void ordena_cartes_jug(uint8_t *juga)
 {
+  //Ordenar cartes pel mateix nombre, ho podem fer per bits
   //Primera passada, numeros, ordenament per seleccio https://es.wikipedia.org/wiki/Ordenamiento_por_selecci%C3%B3n
-  int indexc = 0;
-  for(indexc = 0; indexc<10; indexc++) //Ordenar per pal i nombre
+  int ii = 0;
+  int ij = 1;
+  uint8_t cart = 0x00;
+  int num = 0;
+  char pal;
+  
+  if(juga[ii] | COPES)
   {
-
+	  
   }
+
+  //Ordenar per COPE
+  //
+  //Ordenar BASTUS
+  //
+  //Ordenar ESPASES
+  //
+  //Ordenar ORUS
 }
 
 int main()
