@@ -20,6 +20,8 @@ Les cartes s emmagatzemen en 1Bytes:
 /* TODO
  * 1) La pila no l hauriem de definir com a fifo?
  * 2) Hauriem de crear una mena d index per a cartes lligades?
+ * 3) Algoritme per saber quan punt te
+ * $) Pila descarte/recollida
 */
 
 #define HN 0xF0 	//HighNeedle
@@ -45,8 +47,6 @@ uint8_t baralla3[MAX_BARALLA];
 
 uint8_t pila[MAX_PILA];
 
-//Punts per jugador? Taula final per partida i punts per jugador
-
 uint8_t jugador1[MAX_JUGADOR];
 uint8_t jugador2[MAX_JUGADOR];
 uint8_t jugador3[MAX_JUGADOR];
@@ -57,7 +57,7 @@ void init_baralla(uint8_t *pl) //Podem unificar en un recorregut, dos recorregut
 {
   uint8_t i;
 
-  for(i=0;i<12;i++)    { pl[i] = COPES; } //define
+  for(i=0;i<12;i++)    { pl[i] = COPES; }
   for(i=12;i<24;i++)   { pl[i] = BASTUS ; } 
   for(i=24;i<36;i++)   { pl[i] = ESPASES ; } 
   for(i=36;i<48;i++)   { pl[i] = ORUS ; } 
@@ -93,7 +93,7 @@ void mostra_pila(uint8_t *pl)
 void crear_pila(uint8_t *py, uint8_t *br1, uint8_t *br2, uint8_t *br3)
 { //Proven de fer-ho per adresses?
   
-  int ind = 0, znd = 0;	
+  uint8_t ind = 0, znd = 0;	
   
   while(ind<MAX_PILA)
   {	
@@ -137,11 +137,10 @@ void barreja_pila(uint8_t *pl, int passades)
         if(pos_extreu != pos_posa)
         {
           carta = pl[pos_extreu]; 	  //Extreu A, guardem a carta
-          pl[pos_extreu] = pl[pos_posa];//Posem a pos_extre pos_posa
+          pl[pos_extreu] = pl[pos_posa];  //Posem a pos_extre pos_posa
           pl[pos_posa] = carta;		  // posem a pos_posa carta
         }
-    }
-    passades--;
+    }passades--;
   }
 }
 
@@ -225,12 +224,24 @@ void ordena_cartes_jug(uint8_t *juga) //IA Power!
   uint8_t mida = 10;
 
   //Si volem ordenar per numero i per pal, treure NUM
-
-  while(mida>0)
+  /*while(mida>0) //Ordenem per PAL
   {
     max = 0;
     for(index=1;index<mida;index++)
-      if((juga[index]&NUM) > (juga[max]&NUM)) max = index; //Compara nomes numeros! FET
+      if((juga[index]&PAL) > (juga[max]&PAL)) max = index;
+    temp = juga[mida-1];
+    juga[mida-1] = juga[max];
+    juga[max] = temp;
+    mida--;
+  }*/
+  
+  //mida = 10;
+
+  while(mida>0) //Ordenem per NUM
+  {
+    max = 0;
+    for(index=1;index<mida;index++)
+      if((juga[index]&NUM) > (juga[max]&NUM)) max = index;
     temp = juga[mida-1];
     juga[mida-1] = juga[max];
     juga[max] = temp;
@@ -240,18 +251,19 @@ void ordena_cartes_jug(uint8_t *juga) //IA Power!
 }
 
 //Hem de tenir en compte les cartes lligades!!! Ara suma tot!
-//Per lligar cartes: 3 o mes cartes o igual de num o del mateix pal i colleralives
+//Per lligar cartes:( 3 o mes cartes o igual de num )o (del mateix pal i colleralive)s
 //Trio: k[i] k[i+1] b[i+2] IGUAL NUM
 
-int punts_ma(uint8_t *jugad)
+int punts_ma(uint8_t *jugad) //NO XUTA!!!
 {
   uint8_t recorre = 0;
   int punts = 0;
   
   for(recorre=0;recorre<MAX_JUGADOR-1;recorre++)
   {
-    if(jugad[recorre]&NUM == jugad[recorre+1]&NUM == jugad[recorre+2]&NUM) cout << "Lligat!";
+    if((jugad[recorre]&NUM) == (jugad[recorre+1]&NUM) == (jugad[recorre+2]&NUM)) cout << "Tres cartes iguals per numero";
     else punts += jugad[recorre]&NUM;
+
   }
   return punts;
 }
