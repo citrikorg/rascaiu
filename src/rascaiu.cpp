@@ -47,6 +47,7 @@ uint8_t baralla3[MAX_BARALLA];
 
 uint8_t pila[MAX_PILA];
 
+//Hauriem de definir punts per jugador, un uint8_t de mes??
 uint8_t jugador1[MAX_JUGADOR];
 uint8_t jugador2[MAX_JUGADOR];
 uint8_t jugador3[MAX_JUGADOR];
@@ -223,20 +224,6 @@ void ordena_cartes_jug(uint8_t *juga) //IA Power!
   uint8_t temp = 0x00;
   uint8_t mida = 10;
 
-  //Si volem ordenar per numero i per pal, treure NUM
-  /*while(mida>0) //Ordenem per PAL
-  {
-    max = 0;
-    for(index=1;index<mida;index++)
-      if((juga[index]&PAL) > (juga[max]&PAL)) max = index;
-    temp = juga[mida-1];
-    juga[mida-1] = juga[max];
-    juga[max] = temp;
-    mida--;
-  }*/
-  
-  //mida = 10;
-
   while(mida>0) //Ordenem per NUM
   {
     max = 0;
@@ -247,12 +234,19 @@ void ordena_cartes_jug(uint8_t *juga) //IA Power!
     juga[max] = temp;
     mida--;
   }
-  //Mirar si tres o mes numeros iguals
 }
 
 //Hem de tenir en compte les cartes lligades!!! Ara suma tot!
-//Per lligar cartes:( 3 o mes cartes o igual de num )o (del mateix pal i colleralive)s
+//Per lligar cartes 3 o mes cartes:
+// * Del mateix numero, indiferent pal.
+// * Del mateix pal i correlatives
 //Trio: k[i] k[i+1] b[i+2] IGUAL NUM
+// FER ALGORITME D'ORDENACIO:
+// 1) Per numero FET
+// 2) Buscar parelles de numero i veure si ha tres o mes
+// 3) Buscar parelles per pal i num i veure si hi ha una per sobre, per sota.
+// 4) Posar comodi on hi hagi dues cartes de numero mes alt
+// "Marcar" cartes lligades? En principi no caldria ja ho fem quan comptem punts. 
 
 int punts_ma(uint8_t *jugad) //NO XUTA!!!
 {
