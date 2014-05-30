@@ -48,10 +48,10 @@ uint8_t baralla3[MAX_BARALLA];
 uint8_t pila[MAX_PILA];
 
 //Hauriem de definir punts per jugador, un uint8_t de mes??
-uint8_t jugador1[MAX_JUGADOR];
-uint8_t jugador2[MAX_JUGADOR];
-uint8_t jugador3[MAX_JUGADOR];
-uint8_t jugador4[MAX_JUGADOR];
+uint8_t jugador1[MAX_JUGADOR+1];
+uint8_t jugador2[MAX_JUGADOR+1];
+uint8_t jugador3[MAX_JUGADOR+1];
+uint8_t jugador4[MAX_JUGADOR+1];
 
 
 void init_baralla(uint8_t *pl) //Podem unificar en un recorregut, dos recorreguts
@@ -248,18 +248,15 @@ void ordena_cartes_jug(uint8_t *juga) //IA Power!
 // 4) Posar comodi on hi hagi dues cartes de numero mes alt
 // "Marcar" cartes lligades? En principi no caldria ja ho fem quan comptem punts. 
 
-int punts_ma(uint8_t *jugad) //NO XUTA!!!
+void punts_ma(uint8_t *jugad) //NO FUNCIONA, REVISAR
 {
   uint8_t recorre = 0;
-  int punts = 0;
   
   for(recorre=0;recorre<MAX_JUGADOR-1;recorre++)
   {
     if((jugad[recorre]&NUM) == (jugad[recorre+1]&NUM) == (jugad[recorre+2]&NUM)) cout << "Tres cartes iguals per numero";
-    else punts += jugad[recorre]&NUM;
-
+    else jugad[MAX_JUGADOR+1] += jugad[recorre]&NUM;
   }
-  return punts;
 }
 
 int main()
@@ -286,8 +283,7 @@ int main()
   ordena_cartes_jug(jugador2);
   cout << "Cartes ordenades:" << endl;
   veure_cartes_jug(jugador2);
-  cout << "Punts: ";
-  cout << punts_ma(jugador2);
+  cout << "Punts: " << (int)jugador2[MAX_JUGADOR+1] << endl;
   //mostra_pila(pila);
 }
 
