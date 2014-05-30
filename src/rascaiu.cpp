@@ -248,13 +248,21 @@ void ordena_cartes_jug(uint8_t *juga) //IA Power!
 // 4) Posar comodi on hi hagi dues cartes de numero mes alt
 // "Marcar" cartes lligades? En principi no caldria ja ho fem quan comptem punts. 
 
-void punts_ma(uint8_t *jugad) //NO FUNCIONA, REVISAR
+void punts_ma(uint8_t *jugad) //NO FUNCIONA, REVISAR/REESCRIURE, NO SUMA B
 {
   uint8_t recorre = 0;
-  
+  bool igual_ant = false;
+
+  //Hem de recorrer de 0 a 9? les dues finals no cal si son iguals
+  //Hem de fer bucle "infinit" a la baralla si moltes iguals...
+
   for(recorre=0;recorre<MAX_JUGADOR-1;recorre++)
   {
-    if((jugad[recorre]&NUM) == (jugad[recorre+1]&NUM) == (jugad[recorre+2]&NUM)) cout << "Tres cartes iguals per numero";
+    if((jugad[recorre]&NUM) == (jugad[recorre+1]&NUM)) //Si dues iguals comprova tercera
+    {
+      cout << "2CartesIguals";	
+      if((jugad[recorre+1]&NUM) == (jugad[recorre+2]&NUM)) cout << "3CarteLligades";
+    }
     else jugad[MAX_JUGADOR+1] += jugad[recorre]&NUM;
   }
 }
@@ -283,6 +291,7 @@ int main()
   ordena_cartes_jug(jugador2);
   cout << "Cartes ordenades:" << endl;
   veure_cartes_jug(jugador2);
+  punts_ma(jugador2);
   cout << "Punts: " << (int)jugador2[MAX_JUGADOR+1] << endl;
   //mostra_pila(pila);
 }
