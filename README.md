@@ -6,7 +6,7 @@ El joc Rascaiu és un joc de cartes per a jugar entre 3 jugador fins a buit. Con
 * Cada jugador juga amb 10 cartes a la mà.
 * Guanya el jugador que no arribar als cent punts (S'ha d'anotar amb un paper cada ronda quan punt té cadascú).
 * Les puntacions es fan de la següent manera:
-1) Hola
+a) Hola
 
 Explicació del joc
 ------------------
