@@ -20,7 +20,7 @@ Procediment del joc
 * En aquest moment el jugador té 11 cartes i n'ha de descartar una que posa sobre la taula.
 * El següent jugador, si li agrada la carta, l'agafa i sinó n'agafa una de la pila de cartes.
 * Així es va rotand amb el sentit contrari a les agulles del rellotge.
-* Per a fer que que s'anomena Zero, un ha de tenir TOTES les cartes lligades, per exemple: 1o2b3b 3o3e3b Comodí12e1e3e. En el seu torn rescarta la carta sobrant ficant-la girada sobre el tauler i dit Zero!
+* Per a fer que que s'anomena Zero, un ha de tenir TOTES les cartes lligades, per exemple: 1o2b3b 3o3e3b 12e1eComodí3e. En el seu torn rescarta la carta sobrant ficant-la girada sobre el tauler i dit Zero!
 * En aquest moment cada jugador ha de sumar el numero de totes les cartes que no té lligades, aquesta serà la puntuació de la ronda.
 * Quan un jugador arriba a 100 queda eliminat de la partida.
 
