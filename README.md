@@ -1,6 +1,10 @@
 Joc de cartes rascaiu
 =====================
 
+Explicació del joc
+------------------
+
+
 Xtrem Programming
 =================
 
