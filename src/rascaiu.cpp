@@ -18,9 +18,9 @@ Les cartes s emmagatzemen en 1Bytes:
 */
 
 /* TODO
- * 1) La pila no l hauriem de definir com a fifo?
- * 2) Hauriem de crear una mena d index per a cartes lligades?
- * 3) Algoritme per saber quan punt te
+ * 1) La pila no l hauriem de definir com a fifo? Un cop funcini, implementar...
+ * 2) Hauriem de crear una mena d index per a cartes lligades? Si
+ * 3) Algoritme per saber quan punt te: Aproficat un unint de mes a jugador
  * $) Pila descarte/recollida
 */
 
@@ -35,7 +35,7 @@ Les cartes s emmagatzemen en 1Bytes:
 #define ESPASES 0x40 	// 0100
 #define ORUS 0x80    	// 1000
 
-#define COMODI 0x00  	
+#define COMODI 0x00
 
 #define MAX_PILA 150
 #define MAX_BARALLA 50
@@ -47,7 +47,6 @@ uint8_t baralla3[MAX_BARALLA];
 
 uint8_t pila[MAX_PILA];
 
-//Hauriem de definir punts per jugador, un uint8_t de mes??
 uint8_t jugador1[MAX_JUGADOR+1];
 uint8_t jugador2[MAX_JUGADOR+1];
 uint8_t jugador3[MAX_JUGADOR+1];
@@ -98,7 +97,7 @@ void crear_pila(uint8_t *py, uint8_t *br1, uint8_t *br2, uint8_t *br3)
   
   while(ind<MAX_PILA)
   {	
-    if(ind<=50){ 
+    if( ind<=50 ){ 
       py[ind] = br1[znd];
       znd++;
       ind++;
@@ -141,7 +140,8 @@ void barreja_pila(uint8_t *pl, int passades)
           pl[pos_extreu] = pl[pos_posa];  //Posem a pos_extre pos_posa
           pl[pos_posa] = carta;		  // posem a pos_posa carta
         }
-    }passades--;
+    }
+    passades--;
   }
 }
 
@@ -158,8 +158,11 @@ int suma_pila(uint8_t *pla)
 void repartir_pila(uint8_t *pila_partida, uint8_t *jug1, uint8_t *jug2, uint8_t *jug3, uint8_t *jug4)//, int num_jug)
 {
   uint8_t ij = 0, ip = 0;
+  
   //Repartim 40 cartes entre els jugadors de la pila, de dos ens dos
   //ij de dos a dos i ip de 8 en 8
+  //Posem a 0xFF les cartes ja repartides
+  
   for(ij = 0, ip = 0; ip<40; ij+=2,ip+=8)
   {
     jug1[ij] = pila_partida[ip];
@@ -189,7 +192,7 @@ void veure_cartes_jug(uint8_t *jugador)
   while(cartes<10)
   {
     if(jugador[cartes] & COPES) {
-      car += (jugador[cartes] ^ COPES); //Treiem part alta, funciona? Sembla que si
+      car += (jugador[cartes] ^ COPES); //Treiem part alta
       cout << (int)car << "c"; 
       car = 0x00;
     }
@@ -217,7 +220,8 @@ void veure_cartes_jug(uint8_t *jugador)
 void ordena_cartes_jug(uint8_t *juga) //IA Power!
 {
   //Ordenar cartes pel mateix nombre, ho podem fer per bits
-  //Ordenem per numero dec de carta, ordenacio per seleccio:
+  //Ordenem per numero dec de carta, ordenacio per seleccio
+  //Millorar a algoritme propi!!!
   
   uint8_t max = 0;
   uint8_t index = 1;
@@ -246,24 +250,25 @@ void ordena_cartes_jug(uint8_t *juga) //IA Power!
 // 2) Buscar parelles de numero i veure si ha tres o mes
 // 3) Buscar parelles per pal i num i veure si hi ha una per sobre, per sota.
 // 4) Posar comodi on hi hagi dues cartes de numero mes alt
-// "Marcar" cartes lligades? En principi no caldria ja ho fem quan comptem punts. 
 
-void punts_ma(uint8_t *jugad) //NO FUNCIONA, REVISAR/REESCRIURE, NO SUMA B
+// !!! "Marcar" cartes lligades? En principi no caldria ja ho fem quan comptem punts. 
+
+void punts_ma(uint8_t *jugad) //REVISAR/REESCRIURE, NO SUMA B
 {
   uint8_t recorre = 0;
-  bool igual_ant = false;
+  bool anteriors_lligats = false;
 
   //Hem de recorrer de 0 a 9? les dues finals no cal si son iguals
   //Hem de fer bucle "infinit" a la baralla si moltes iguals...
 
   for(recorre=0;recorre<MAX_JUGADOR-1;recorre++)
   {
-    if((jugad[recorre]&NUM) == (jugad[recorre+1]&NUM)) //Si dues iguals comprova tercera
+    if((jugad[recorre]&NUM) == (jugad[recorre+1]&NUM)) //Si dues iguals comprova tercera, funciona
     {
-      cout << "2CartesIguals";	
-      if((jugad[recorre+1]&NUM) == (jugad[recorre+2]&NUM)) cout << "3CarteLligades";
+      cout << "2LL"; 
+      if((jugad[recorre+1]&NUM) == (jugad[recorre+2]&NUM)) cout << "3LL"; //Funciona
     }
-    else jugad[MAX_JUGADOR+1] += jugad[recorre]&NUM;
+    else jugad[MAX_JUGADOR+1] += jugad[recorre]&NUM; //no suma b
   }
 }
 
