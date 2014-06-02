@@ -121,7 +121,7 @@ void crear_pila(uint8_t *py, uint8_t *br1, uint8_t *br2, uint8_t *br3)
 }
 
 //Utilitza srand(time(NULL)) per a barrejar una pila passada per referencia tantes
-// passades com s indica
+// passades com s'indica
 void barreja_pila(uint8_t *pl, int passades)
 {
   uint8_t carta;
@@ -261,11 +261,11 @@ void ordena_cartes_jug(uint8_t *juga) //IA Power!
 
 // !!! "Marcar" cartes lligades? En principi no caldria ja ho fem quan comptem punts. 
 
-//Recorna per pantall la puntacio d'un jugador. Guardem la puntuacio dins jugador NO FUNCIONA
+//Retorna per pantalla la puntacio d'un jugador. Guardem la puntuacio dins jugador NO FUNCIONA
 void punts_ma(uint8_t *jugad) 
 {
   uint8_t recorre = 0;
-  bool anteriors_lligats = false;
+  bool anteriors_lligats = false; //seguent_igual?
 
   //Hem de recorrer de 0 a 9? les dues finals no cal si son iguals
   //Hem de fer bucle "infinit" a la baralla si moltes iguals...
