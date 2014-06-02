@@ -29,6 +29,7 @@ Funcions
 ========
 
 Inicialitza baralla, genera les cartes de la pila per referencia de mida MAX_PILA
+
 void init_baralla(uint8_t *pl)
 
 //Mostra per pantalla la baralla espesificada per referencia
