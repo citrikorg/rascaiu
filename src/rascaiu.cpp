@@ -5,6 +5,8 @@
 
 using namespace std;
 
+//PROVES
+
 /*
 
 Les cartes s emmagatzemen en 1Bytes:
@@ -246,13 +248,20 @@ void ordena_cartes_jug(uint8_t *juga) //IA Power!
     juga[max] = temp;
     mida--;
   }
+
+  /* Aqui una altre passada mirant els pals
+   * 1) Agafar una carta i veure si hi ha correlatives (per dalt i per baix)
+   * 2) Si hi es buscar tercera i mes.
+   * 3) Agrupar
+   * FOR ACABAR CARTES, les marquem? No cal, les recorrem totes!
+   * /
 }
 
 //Hem de tenir en compte les cartes lligades!!! Ara suma tot!
 //Per lligar cartes 3 o mes cartes:
 // * Del mateix numero, indiferent pal.
 // * Del mateix pal i correlatives
-//Trio: k[i] k[i+1] b[i+2] IGUAL NUM
+// Trio: k[i] k[i+1] b[i+2] IGUAL NUM
 // FER ALGORITME D'ORDENACIO:
 // 1) Per numero FET
 // 2) Buscar parelles de numero i veure si ha tres o mes
